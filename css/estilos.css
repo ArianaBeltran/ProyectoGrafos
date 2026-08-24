@@ -1,0 +1,51 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    height: calc(100vh - 70px);
+}
+
+aside {
+    width: 250px;
+    background-color: white;
+    padding: 20px;
+}
+
+aside button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+section {
+    flex: 1;
+    padding: 10px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+#canvasGrafo { --gestos tactiles
+    touch-action: none;
+}
