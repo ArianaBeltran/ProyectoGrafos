@@ -5,6 +5,7 @@ class Arista {
         destino,
         pesoIda,
         pesoVuelta,
+        dirigida,
         bidireccional
     ) {
 
@@ -16,7 +17,10 @@ class Arista {
 
         this.pesoVuelta = pesoVuelta;
 
-        this.bidireccional = bidireccional;
+        this.dirigida = dirigida;
+
+        this.bidireccional =
+            bidireccional;
 
     }
 

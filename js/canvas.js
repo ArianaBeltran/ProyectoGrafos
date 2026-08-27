@@ -25,15 +25,46 @@ let colorVertice = document.getElementById("colorVertice");
 
 // Elementos del panel de arista
 let panelArista = document.getElementById("panelArista");
-let origenArista = document.getElementById("origenArista");
-let destinoArista = document.getElementById("destinoArista");
+let origenArista = document.getElementById("origenArista"); 
+let destinoArista = document.getElementById("destinoArista"); 
 
-let pesoIda = document.getElementById("pesoIda");
+let pesoIda = document.getElementById("pesoIda"); 
 
-let pesoVuelta = document.getElementById("pesoVuelta");
+let etiquetaPesoIda =
+    document.getElementById(
+        "etiquetaPesoIda"
+    );
+
+let pesoVuelta = document.getElementById("pesoVuelta"); 
 
 let contenedorPesoVuelta =
     document.getElementById("contenedorPesoVuelta");
+
+
+let aristaDirigida =
+    document.getElementById(
+        "aristaDirigida"
+    );
+
+let aristaNoDirigida =
+    document.getElementById(
+        "aristaNoDirigida"
+    );
+
+let aristaUnidireccional =
+    document.getElementById(
+        "aristaUnidireccional"
+    );
+
+let aristaBidireccional =
+    document.getElementById(
+        "aristaBidireccional"
+    );
+
+let tipoDireccion =
+    document.getElementById(
+        "tipoDireccion"
+    );
 
 let guardarArista = document.getElementById("guardarArista");
 let cancelarArista = document.getElementById("cancelarArista");
@@ -88,40 +119,97 @@ function dibujarArista(arista) {
     let finalY = destino.y - uy * destino.radio;
 
 
-    if (arista.bidireccional == false) {
+    if (arista.dirigida == false) {
 
-        dibujarDireccion(
-            inicioX,
-            inicioY,
-            finalX,
-            finalY,
-            origen.color,
-            arista.pesoIda
-        );
+    // Arista NO dirigida
 
-    } else {
+    ctx.beginPath();
 
-        // Dirección origen → destino
-        dibujarDireccion(
-            inicioX + px * separacion,
-            inicioY + py * separacion,
-            finalX + px * separacion,
-            finalY + py * separacion,
-            origen.color,
-            arista.pesoIda
-        );
+    ctx.moveTo(
+        inicioX,
+        inicioY
+    );
 
-        // Dirección destino → origen
-        dibujarDireccion(
-            finalX - px * separacion,
-            finalY - py * separacion,
-            inicioX - px * separacion,
-            inicioY - py * separacion,
-            destino.color,
-            arista.pesoVuelta
-        );
+    ctx.lineTo(
+        finalX,
+        finalY
+    );
 
-    }
+    ctx.strokeStyle =
+        origen.color;
+
+    ctx.lineWidth = 3;
+
+    ctx.stroke();
+
+
+    // Peso
+
+    let medioX =
+        (inicioX + finalX) / 2;
+
+    let medioY =
+        (inicioY + finalY) / 2;
+
+    ctx.fillStyle =
+        origen.color;
+
+    ctx.font =
+        "16px Arial";
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "bottom";
+
+    ctx.fillText(
+        arista.pesoIda,
+        medioX,
+        medioY - 5
+    );
+
+}
+else if (
+    arista.bidireccional == false
+) {
+
+    // Dirigida + unidireccional
+
+    dibujarDireccion(
+        inicioX,
+        inicioY,
+        finalX,
+        finalY,
+        origen.color,
+        arista.pesoIda
+    );
+
+}
+else {
+
+    // Dirigida + bidireccional
+
+    dibujarDireccion(
+        inicioX + px * separacion,
+        inicioY + py * separacion,
+        finalX + px * separacion,
+        finalY + py * separacion,
+        origen.color,
+        arista.pesoIda
+    );
+
+
+    dibujarDireccion(
+        finalX - px * separacion,
+        finalY - py * separacion,
+        inicioX - px * separacion,
+        inicioY - py * separacion,
+        destino.color,
+        arista.pesoVuelta
+    );
+
+}
 
 }
 
@@ -615,70 +703,120 @@ document.getElementById("crearArista").addEventListener("click", function() {
 
     verticeOrigen = null;
 
+    verticeDestino = null;
+
     console.log("Modo crear arista activado");
 
 });
 
-guardarArista.addEventListener("click", function() {
+guardarArista.addEventListener(
+    "click",
+    function() {
 
-    if (verticeOrigen == null || verticeDestino == null) {
+        if (
+            verticeOrigen == null ||
+            verticeDestino == null
+        ) {
+            alert(
+                "Debes seleccionar un origen y un destino."
+            );
+            return;
+        }
 
-        alert("Debes seleccionar un origen y un destino.");
 
-        return;
+        // Saber si la arista es dirigida
+        let dirigida =
+            aristaDirigida.checked;
+
+
+        // Saber si es bidireccional
+        let bidireccional = false;
+
+        if (
+            dirigida &&
+            aristaBidireccional.checked
+        ) {
+            bidireccional = true;
+        }
+
+
+        // Comprobar si ya existe
+        if (
+            existeArista(
+                verticeOrigen,
+                verticeDestino
+            )
+        ) {
+            alert(
+                "Ya existe una arista entre estos vértices."
+            );
+            return;
+        }
+
+
+        // Leer peso de ida
+        let valorPesoIda =
+            Number(pesoIda.value);
+
+
+        // Leer peso de vuelta
+        let valorPesoVuelta = 0;
+
+        if (bidireccional) {
+
+            valorPesoVuelta =
+                Number(pesoVuelta.value);
+
+        }
+
+
+        // Mostrar en consola para comprobar
+        console.log(
+            "Peso ida:",
+            valorPesoIda
+        );
+
+        console.log(
+            "Peso vuelta:",
+            valorPesoVuelta
+        );
+
+
+        // Crear la arista
+        let nuevaArista =
+            new Arista(
+                verticeOrigen,
+                verticeDestino,
+                valorPesoIda,
+                valorPesoVuelta,
+                dirigida,
+                bidireccional
+            );
+
+
+        aristas.push(
+            nuevaArista
+        );
+
+
+        console.log(
+            "Arista creada:",
+            nuevaArista
+        );
+
+
+        panelArista.style.display =
+            "none";
+
+
+        verticeOrigen = null;
+
+        verticeDestino = null;
+
+        dibujarVertices();
+
     }
-
-    if (verticeOrigen == verticeDestino) {
-
-    alert("Un vértice no puede conectarse consigo mismo.");
-
-    return;
-}
-
-if (existeArista(verticeOrigen, verticeDestino)) {
-
-    alert("Ya existe una arista entre estos vértices.");
-
-    return;
-}
-    let valorPesoIda = Number(pesoIda.value);
-
-    let valorPesoVuelta = 0;
-
-    let bidireccional = false;
-
-
-    if (document.getElementById("bidireccional").checked) {
-
-        bidireccional = true;
-
-        valorPesoVuelta = Number(pesoVuelta.value);
-
-    }
-
-
-    let nuevaArista = new Arista(
-        verticeOrigen,
-        verticeDestino,
-        valorPesoIda,
-        valorPesoVuelta,
-        bidireccional
-    );
-
-    aristas.push(nuevaArista);
-
-    console.log("Arista creada:", nuevaArista);
-
-    panelArista.style.display = "none";
-
-    verticeOrigen = null;
-
-    verticeDestino = null;
-
-    dibujarVertices();
-
-});
-
+);
 cancelarArista.addEventListener("click", function() {
 
     panelArista.style.display = "none";
@@ -864,3 +1002,58 @@ botonEliminarArista.addEventListener(
     "click",
     eliminarArista
 );
+
+aristaDirigida.addEventListener(
+    "change",
+    function() {
+
+        if (aristaDirigida.checked) {
+
+            tipoDireccion.style.display =
+                "block";
+
+            etiquetaPesoIda.textContent =
+                "Peso A → B:";
+
+        }
+
+    }
+);
+
+aristaNoDirigida.addEventListener(
+    "change",
+    function() {
+
+        if (aristaNoDirigida.checked) {
+
+            tipoDireccion.style.display =
+                "none";
+
+            contenedorPesoVuelta.style.display =
+                "none";
+
+            etiquetaPesoIda.textContent =
+                "Peso:";
+
+        }
+
+    }
+);
+
+aristaBidireccional.addEventListener(
+    "change",
+    function() {
+
+        if (aristaBidireccional.checked) {
+
+            contenedorPesoVuelta.style.display =
+                "block";
+
+            etiquetaPesoIda.textContent =
+                "Peso A → B:";
+
+        }
+
+    }
+);
+
