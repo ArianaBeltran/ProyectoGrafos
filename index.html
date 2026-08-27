@@ -35,9 +35,98 @@
                 <button id="eliminarArista">
                     Eliminar arista
                 </button>
+                <button id="btnHelp" class="botonHelp">
+                    HELP
+                </button>
 
             </div>
+            
+            <!-- VENTANA DE AYUDA -->
 
+<div id="ventanaHelp" class="ventanaHelp">
+
+    <div class="contenidoHelp">
+
+        <button id="cerrarHelp" class="cerrarHelp">
+            ×
+        </button>
+
+        <h2>🎀 Guía de uso 🎀</h2>
+
+        <p>
+            ¡Bienvenida a tu Editor de Grafos! 💗
+        </p>
+
+        <div class="instrucciones">
+
+            <p><strong>💕 1. Crear vértice</strong></p>
+            <p>
+                Pulsa "Crear vértice" y después haz clic
+                en el área de trabajo.
+            </p>
+
+            <p><strong>🌸 2. Editar vértice</strong></p>
+            <p>
+                Selecciona un vértice para cambiar su
+                nombre y color.
+            </p>
+
+            <p><strong>🎀 3. Mover vértice</strong></p>
+            <p>
+                Mantén presionado el vértice y arrástralo
+                hasta la posición deseada.
+            </p>
+
+            <p><strong>💗 4. Crear arista</strong></p>
+            <p>
+                Pulsa "Crear arista" y selecciona primero
+                el origen y después el destino.
+            </p>
+
+            <p><strong>🌷 5. Tipo de arista</strong></p>
+            <p>
+                Puedes elegir entre dirigida y no dirigida.
+            </p>
+
+            <p><strong>✨ 6. Dirección</strong></p>
+            <p>
+                Si la arista es dirigida, puedes elegir
+                entre unidireccional y bidireccional.
+            </p>
+
+            <p><strong>💞 7. Peso</strong></p>
+            <p>
+                Introduce el peso de la arista antes
+                de crearla.
+            </p>
+
+            <p><strong>🎀 8. Arista bidireccional</strong></p>
+            <p>
+                Puedes asignar un peso diferente a cada
+                dirección.
+            </p>
+
+            <p><strong>🌸 9. Bucle</strong></p>
+            <p>
+                Selecciona el mismo vértice como origen
+                y destino para crear un bucle.
+            </p>
+
+            <p><strong>💗 10. Eliminar</strong></p>
+            <p>
+                Selecciona un vértice o una arista y
+                utiliza el botón correspondiente para eliminarlo.
+            </p>
+
+        </div>
+
+        <p class="mensajeHelp">
+            ✨ ¡Diviértete creando tus grafos! ✨
+        </p>
+
+    </div>
+
+</div>
 
             <!-- =========================
                  BOTONES PRINCIPALES
@@ -93,6 +182,43 @@
             <div id="panelArista" style="display: none;">
 
                 <h3>Nueva arista</h3>
+
+                <div id="opcionBucle">
+
+                <p><strong>Tipo de conexión:</strong></p>
+
+                <label for="aristaNormal">
+
+                    <input
+                        type="radio"
+                        name="tipoConexion"
+                        id="aristaNormal"
+                        value="normal"
+                        checked
+                    >
+
+                    Entre dos vértices
+
+                </label>
+
+                <br>
+
+                <label for="aristaBucle">
+
+                    <input
+                        type="radio"
+                        name="tipoConexion"
+                        id="aristaBucle"
+                        value="bucle"
+                    >
+
+                    Bucle
+
+                </label>
+
+            </div>
+
+            <br>
 
 
                 <!-- ORIGEN -->
@@ -214,7 +340,7 @@
                      PESO DE LA ARISTA
                 ========================== -->
 
-                <<div id="contenedorPesoIda">
+                <div id="contenedorPesoIda">
 
                     <label for="pesoIda" id="etiquetaPesoIda">
                         Peso:

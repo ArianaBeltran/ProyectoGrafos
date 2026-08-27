@@ -49,3 +49,167 @@ canvas {
 #canvasGrafo { --gestos tactiles
     touch-action: none;
 }
+
+/* =========================
+   BOTÓN HELP
+========================= */
+
+.botonHelp {
+    background: #ff4f9a;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+}
+
+.botonHelp:hover {
+    background: #e83e87;
+    transform: scale(1.03);
+}
+
+
+/* =========================
+   VENTANA HELP
+========================= */
+
+.ventanaHelp {
+
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(255, 182, 213, 0.55);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+
+/* =========================
+   CONTENIDO
+========================= */
+
+.contenidoHelp {
+
+    position: relative;
+
+    width: 85%;
+    max-width: 550px;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    background: #fff0f7;
+
+    border: 3px solid #ff8fc3;
+
+    border-radius: 25px;
+
+    padding: 30px;
+
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.35);
+
+}
+
+
+/* TÍTULO */
+
+.contenidoHelp h2 {
+
+    text-align: center;
+
+    color: #e83e87;
+
+    font-size: 28px;
+
+    margin-top: 5px;
+
+}
+
+
+/* TEXTO */
+
+.contenidoHelp p {
+
+    color: #8f3b62;
+
+    line-height: 1.5;
+
+}
+
+
+/* TÍTULOS DE CADA INSTRUCCIÓN */
+
+.instrucciones strong {
+
+    color: #e83e87;
+
+    font-size: 17px;
+
+}
+
+
+/* MENSAJE FINAL */
+
+.mensajeHelp {
+
+    text-align: center;
+
+    font-weight: bold;
+
+    color: #ff4f9a !important;
+
+    margin-top: 25px;
+
+}
+
+
+/* =========================
+   BOTÓN CERRAR
+========================= */
+
+.cerrarHelp {
+
+    position: absolute;
+
+    top: 12px;
+    right: 15px;
+
+    border: none;
+
+    background: #ff8fc3;
+
+    color: white;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    width: 35px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+}
+
+.cerrarHelp:hover {
+
+    background: #e83e87;
+
+    transform: scale(1.1);
+
+}

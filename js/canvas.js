@@ -90,7 +90,100 @@ function dibujarArista(arista) {
     let origen = arista.origen;
     let destino = arista.destino;
 
+    // ==========================================
+    // BUCLE: origen y destino son el mismo vértice
+    // ==========================================
+
+    if (origen == destino) {
+
+        let centroX = origen.x;
+        let centroY = origen.y - 45;
+        let radioBucle = 35;
+
+        let anguloInicio = Math.PI * 0.75;
+        let anguloFinal = Math.PI * 2.25;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            centroX,
+            centroY,
+            radioBucle,
+            anguloInicio,
+            anguloFinal
+        );
+
+        ctx.strokeStyle = origen.color;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+
+        // ==========================================
+        // PESO DEL BUCLE
+        // ==========================================
+
+        let anguloMedio =
+            (anguloInicio + anguloFinal) / 2;
+
+        let pesoX =
+            centroX +
+            (radioBucle + 10) *
+            Math.cos(anguloMedio);
+
+        let pesoY =
+            centroY +
+            (radioBucle + 10) *
+            Math.sin(anguloMedio);
+
+        ctx.fillStyle = origen.color;
+        ctx.font = "16px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText(
+            arista.pesoIda,
+            pesoX,
+            pesoY
+        );
+
+
+        // ==========================================
+        // FLECHA DEL BUCLE DIRIGIDO
+        // ==========================================
+
+        if (arista.dirigida == true) {
+
+            let flechaX =
+                centroX +
+                radioBucle *
+                Math.cos(anguloFinal);
+
+            let flechaY =
+                centroY +
+                radioBucle *
+                Math.sin(anguloFinal);
+
+            let anguloFlecha =
+                anguloFinal + Math.PI / 2;
+
+            dibujarFlecha(
+                flechaX,
+                flechaY,
+                anguloFlecha,
+                origen.color
+            );
+        }
+
+        return;
+    }
+
+
+    // ==========================================
+    // ARISTA NORMAL
+    // ==========================================
+
     let dx = destino.x - origen.x;
+
     let dy = destino.y - origen.y;
 
     let distancia = Math.sqrt(
@@ -106,111 +199,130 @@ function dibujarArista(arista) {
     let uy = dy / distancia;
 
     // Vector perpendicular
+
     let px = -uy;
     let py = ux;
 
     // Separación entre las dos direcciones
+
     let separacion = 15;
 
-    let inicioX = origen.x + ux * origen.radio;
-    let inicioY = origen.y + uy * origen.radio;
+    let inicioX =
+        origen.x +
+        ux * origen.radio;
 
-    let finalX = destino.x - ux * destino.radio;
-    let finalY = destino.y - uy * destino.radio;
+    let inicioY =
+        origen.y +
+        uy * origen.radio;
 
+    let finalX =
+        destino.x -
+        ux * destino.radio;
+
+    let finalY =
+        destino.y -
+        uy * destino.radio;
+
+
+    // ==========================================
+    // ARISTA NO DIRIGIDA
+    // ==========================================
 
     if (arista.dirigida == false) {
 
-    // Arista NO dirigida
+        ctx.beginPath();
 
-    ctx.beginPath();
+        ctx.moveTo(
+            inicioX,
+            inicioY
+        );
 
-    ctx.moveTo(
-        inicioX,
-        inicioY
-    );
+        ctx.lineTo(
+            finalX,
+            finalY
+        );
 
-    ctx.lineTo(
-        finalX,
-        finalY
-    );
+        ctx.strokeStyle = origen.color;
+        ctx.lineWidth = 3;
+        ctx.stroke();
 
-    ctx.strokeStyle =
-        origen.color;
+        // Peso
 
-    ctx.lineWidth = 3;
+        let medioX =
+            (inicioX + finalX) / 2;
 
-    ctx.stroke();
+        let medioY =
+            (inicioY + finalY) / 2;
 
+        ctx.fillStyle = origen.color;
+        ctx.font = "16px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
 
-    // Peso
+        ctx.fillText(
+            arista.pesoIda,
+            medioX,
+            medioY - 5
+        );
 
-    let medioX =
-        (inicioX + finalX) / 2;
-
-    let medioY =
-        (inicioY + finalY) / 2;
-
-    ctx.fillStyle =
-        origen.color;
-
-    ctx.font =
-        "16px Arial";
-
-    ctx.textAlign =
-        "center";
-
-    ctx.textBaseline =
-        "bottom";
-
-    ctx.fillText(
-        arista.pesoIda,
-        medioX,
-        medioY - 5
-    );
-
-}
-else if (
-    arista.bidireccional == false
-) {
-
-    // Dirigida + unidireccional
-
-    dibujarDireccion(
-        inicioX,
-        inicioY,
-        finalX,
-        finalY,
-        origen.color,
-        arista.pesoIda
-    );
-
-}
-else {
-
-    // Dirigida + bidireccional
-
-    dibujarDireccion(
-        inicioX + px * separacion,
-        inicioY + py * separacion,
-        finalX + px * separacion,
-        finalY + py * separacion,
-        origen.color,
-        arista.pesoIda
-    );
+        return;
+    }
 
 
-    dibujarDireccion(
-        finalX - px * separacion,
-        finalY - py * separacion,
-        inicioX - px * separacion,
-        inicioY - py * separacion,
-        destino.color,
-        arista.pesoVuelta
-    );
+    // ==========================================
+    // ARISTA DIRIGIDA UNIDIRECCIONAL
+    // ==========================================
 
-}
+    if (
+        arista.dirigida == true &&
+        arista.bidireccional == false
+    ) {
 
+        dibujarDireccion(
+            inicioX,
+            inicioY,
+            finalX,
+            finalY,
+            origen.color,
+            arista.pesoIda
+        );
+
+        return;
+    }
+
+
+    // ==========================================
+    // ARISTA DIRIGIDA BIDIRECCIONAL
+    // ==========================================
+
+    if (
+        arista.dirigida == true &&
+        arista.bidireccional == true
+    ) {
+
+        // Dirección origen → destino
+
+        dibujarDireccion(
+            inicioX + px * separacion,
+            inicioY + py * separacion,
+            finalX + px * separacion,
+            finalY + py * separacion,
+            origen.color,
+            arista.pesoIda
+        );
+
+
+        // Dirección destino → origen
+
+        dibujarDireccion(
+            finalX - px * separacion,
+            finalY - py * separacion,
+            inicioX - px * separacion,
+            inicioY - py * separacion,
+            destino.color,
+            arista.pesoVuelta
+        );
+    }
 }
 
 function dibujarDireccion(
@@ -410,7 +522,25 @@ function obtenerAristaEn(x, y) {
             dy * dy
         );
 
-        if (distancia == 0) {
+        // Detectar bucle
+        if (origen == destino) {
+
+            let centroX = origen.x;
+            let centroY = origen.y - 45;
+            let radioBucle = 35;
+
+            let distanciaCentro = Math.sqrt(
+                (x - centroX) * (x - centroX) +
+                (y - centroY) * (y - centroY)
+            );
+
+            if (
+                distanciaCentro >= radioBucle - 10 &&
+                distanciaCentro <= radioBucle + 10
+            ) {
+                return arista;
+            }
+
             continue;
         }
 
@@ -618,7 +748,7 @@ canvas.addEventListener("pointerdown", function(event) {
             let nuevoVertice = new Vertice(
                 id,
                 nombre,
-                "red",
+                "#ff0000",
                 x,
                 y
             );
@@ -739,6 +869,13 @@ guardarArista.addEventListener(
             bidireccional = true;
         }
 
+        //saber si es bucle
+        let bucle = false;
+
+        if (verticeOrigen == verticeDestino) {
+            bucle = true;
+        }
+
 
         // Comprobar si ya existe
         if (
@@ -784,14 +921,16 @@ guardarArista.addEventListener(
 
         // Crear la arista
         let nuevaArista =
-            new Arista(
-                verticeOrigen,
-                verticeDestino,
-                valorPesoIda,
-                valorPesoVuelta,
-                dirigida,
-                bidireccional
-            );
+        new Arista(
+            verticeOrigen,
+            verticeDestino,
+            valorPesoIda,
+            valorPesoVuelta,
+            dirigida,
+            bidireccional
+        );
+
+nuevaArista.bucle = bucle;
 
 
         aristas.push(
@@ -829,9 +968,9 @@ cancelarArista.addEventListener("click", function() {
 
 });
 
-document.getElementById("bidireccional").addEventListener("change", function() {
+aristaBidireccional.addEventListener("change", function() {
 
-    if (this.checked) {
+    if (aristaBidireccional.checked) {
 
         contenedorPesoVuelta.style.display = "block";
 
@@ -839,9 +978,10 @@ document.getElementById("bidireccional").addEventListener("change", function() {
 
 });
 
-document.getElementById("unidireccional").addEventListener("change", function() {
 
-    if (this.checked) {
+aristaUnidireccional.addEventListener("change", function() {
+
+    if (aristaUnidireccional.checked) {
 
         contenedorPesoVuelta.style.display = "none";
 
@@ -1057,3 +1197,57 @@ aristaBidireccional.addEventListener(
     }
 );
 
+function dibujarBucle(arista) {
+
+    let vertice = arista.origen;
+
+    let x = vertice.x;
+    let y = vertice.y;
+
+    let radio = vertice.radio;
+
+    let radioBucle = radio + 25;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y - radioBucle,
+        radioBucle,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.strokeStyle = vertice.color;
+    ctx.lineWidth = 3;
+
+    ctx.stroke();
+
+    // Mostrar peso
+    ctx.fillStyle = vertice.color;
+    ctx.font = "16px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillText(
+        arista.pesoIda,
+        x,
+        y - radioBucle * 2
+    );
+
+    // Flecha si la arista es dirigida
+    if (arista.dirigida == true) {
+
+        let flechaX = x + radioBucle;
+        let flechaY = y - radioBucle;
+
+        let angulo = Math.PI / 2;
+
+        dibujarFlecha(
+            flechaX,
+            flechaY,
+            angulo,
+            vertice.color
+        );
+    }
+}
