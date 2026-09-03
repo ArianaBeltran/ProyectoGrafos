@@ -23,22 +23,19 @@
             <!-- =========================
                  HERRAMIENTAS
             ========================== -->
-
             <div id="herramientas">
+                <h2><strong>Herramientas</strong></h2>
 
-                <h2>Herramientas</h2>
+                <button id="eliminarVertice">🗑️ Eliminar vértice</button>
+                <button id="eliminarArista">🗑️ Eliminar arista</button>
 
-                <button id="eliminarVertice">
-                    Eliminar vértice
-                </button>
+                <button id="btnHelp" class="botonHelp">🆘 HELP </button>
 
-                <button id="eliminarArista">
-                    Eliminar arista
-                </button>
-                <button id="btnHelp" class="botonHelp">
-                    HELP
-                </button>
+                <button id="guardarGrafo">💾 Guardar Grafo</button>
 
+                <button id="abrirGrafo">📂 Abrir Grafo</button>
+
+                <button id="mostrarMatriz">📊 Matriz de Adyacencia</button>
             </div>
             
             <!-- VENTANA DE AYUDA -->
@@ -416,6 +413,36 @@
 
     </main>
 
+    <div id="ventanaGrafos" class="ventanaGrafos">
+
+        <div class="contenidoGrafos">
+
+            <h2>📂 Mis Grafos</h2>
+
+            <div id="listaGrafos"></div>
+
+            <button id="cerrarGrafos">
+                Cerrar
+            </button>
+
+        </div>
+
+    </div>
+    
+    <!-- ============================
+        VENTANA MATRIZ DE ADYACENCIA
+    ========================== -->
+
+    <div id="ventanaMatriz" class="ventanaMatriz">
+        <div class="contenidoMatriz">
+            <h2>📊 Matriz de Adyacencia</h2>
+
+            <div id="tablaMatriz"></div>
+
+            <button id="cerrarMatriz">Cerrar</button>
+        </div>
+    </div>
+
 
     <!-- =========================
          ARCHIVOS JAVASCRIPT
@@ -432,5 +459,7 @@
     <script src="js/interfaz.js"></script>
 
 </body>
+
+
 
 </html>

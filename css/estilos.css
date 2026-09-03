@@ -6,14 +6,17 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #93aeca;
 }
 
+
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 header {
-    background-color: #333;
-    color: white;
+    background-color: #ffc0cb;
+    color: #31487a;
     padding: 15px;
     text-align: center;
+    font-family: 'Arial', sans-serif;
 }
 
 main {
@@ -23,7 +26,7 @@ main {
 
 aside {
     width: 250px;
-    background-color: white;
+    background-color: #93aeca;
     padding: 20px;
 }
 
@@ -42,7 +45,7 @@ section {
 canvas {
     width: 100%;
     height: 100%;
-    background-color: white;
+    background-color: #ffc0cb;
     border: 1px solid #ccc;
 }
 
@@ -55,7 +58,7 @@ canvas {
 ========================= */
 
 .botonHelp {
-    background: #ff4f9a;
+    background: #31487a;
     color: white;
     font-weight: bold;
     border: none;
@@ -66,10 +69,9 @@ canvas {
 }
 
 .botonHelp:hover {
-    background: #e83e87;
+    background: #63072f;
     transform: scale(1.03);
 }
-
 
 /* =========================
    VENTANA HELP
@@ -94,6 +96,7 @@ canvas {
 
     z-index: 1000;
 }
+
 
 
 /* =========================
@@ -213,3 +216,157 @@ canvas {
     transform: scale(1.1);
 
 }
+
+/* Ventana de grafos guardados */
+
+.ventanaGrafos {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.contenidoGrafos {
+    background-color: #fff0f6;
+    width: 400px;
+    max-width: 90%;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.contenidoGrafos h2 {
+    color: #d63384;
+    margin-bottom: 20px;
+}
+
+.grafoGuardado {
+    background-color: white;
+    border: 2px solid #f3a6c8;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.nombreGrafo {
+    font-weight: bold;
+    color: #555;
+    flex: 1;
+    text-align: left;
+}
+
+.botonAbrir {
+    background-color: #f8a5c2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 12px;
+    cursor: pointer;
+}
+
+.botonEliminar {
+    background-color: #e75480;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 12px;
+    cursor: pointer;
+}
+
+#cerrarGrafos {
+    margin-top: 15px;
+    background-color: #d63384;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#cerrarGrafos:hover,
+.botonAbrir:hover,
+.botonEliminar:hover {
+    opacity: 0.8;
+}
+
+.ventanaMatriz {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.contenidoMatriz {
+    background-color: #fff0f6;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 90%;
+    max-height: 80%;
+    overflow: auto;
+}
+
+.contenidoMatriz h2 {
+    color: #d63384;
+    margin-bottom: 20px;
+}
+
+#tablaMatriz {
+    margin-bottom: 20px;
+}
+
+#tablaMatriz table {
+    border-collapse: collapse;
+    margin: auto;
+}
+
+#tablaMatriz th,
+#tablaMatriz td {
+    border: 2px solid #f3a6c8;
+    padding: 10px 15px;
+    text-align: center;
+}
+
+#tablaMatriz th {
+    background-color: #f8a5c2;
+    color: white;
+}
+
+#tablaMatriz td {
+    background-color: white;
+}
+
+#cerrarMatriz {
+    background-color: #d63384;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#cerrarMatriz:hover {
+    opacity: 0.8;
+}
+
