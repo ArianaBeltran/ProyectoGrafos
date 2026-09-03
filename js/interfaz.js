@@ -546,7 +546,7 @@ function crearMatrizAdyacencia() {
         let posicionOrigen = -1;
         let posicionDestino = -1;
 
-        // Buscar posición del origen
+        // Buscar posición de los vértices
         for (let j = 0; j < n; j++) {
 
             if (vertices[j].id == arista.origen.id) {
@@ -560,13 +560,13 @@ function crearMatrizAdyacencia() {
 
         if (posicionOrigen != -1 && posicionDestino != -1) {
 
-            // Si es una arista dirigida
+            // Arista dirigida
             if (arista.dirigida == true) {
 
                 matriz[posicionOrigen][posicionDestino] =
                     arista.pesoIda;
 
-                // Si es bidireccional
+                // Arista bidireccional
                 if (arista.bidireccional == true) {
 
                     matriz[posicionDestino][posicionOrigen] =
@@ -585,10 +585,10 @@ function crearMatrizAdyacencia() {
         }
     }
 
-    // Crear la tabla HTML
+    // Crear tabla
     let tabla = "<table>";
 
-    // Primera fila
+    // Encabezado
     tabla += "<tr>";
     tabla += "<th></th>";
 
@@ -596,10 +596,13 @@ function crearMatrizAdyacencia() {
         tabla += "<th>" + vertices[i].nombre + "</th>";
     }
 
+    tabla += "<th>Suma fila</th>";
     tabla += "</tr>";
 
-    // Filas de la matriz
+    // Filas
     for (let i = 0; i < n; i++) {
+
+        let sumaFila = 0;
 
         tabla += "<tr>";
 
@@ -609,10 +612,36 @@ function crearMatrizAdyacencia() {
         for (let j = 0; j < n; j++) {
 
             tabla += "<td>" + matriz[i][j] + "</td>";
+
+            sumaFila += Number(matriz[i][j]);
         }
+
+        // Suma de la fila
+        tabla += "<th>" + sumaFila + "</th>";
 
         tabla += "</tr>";
     }
+
+    // Fila de suma de columnas
+    tabla += "<tr>";
+
+    tabla += "<th>Suma columna</th>";
+
+    for (let j = 0; j < n; j++) {
+
+        let sumaColumna = 0;
+
+        for (let i = 0; i < n; i++) {
+
+            sumaColumna += Number(matriz[i][j]);
+        }
+
+        tabla += "<th>" + sumaColumna + "</th>";
+    }
+
+    tabla += "<th></th>";
+
+    tabla += "</tr>";
 
     tabla += "</table>";
 
